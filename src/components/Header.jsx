@@ -46,7 +46,7 @@ export default function Header({ cart, removeFromCart, incrementFromCart, decrem
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-dark"
-                                                                    onClick={() => decrementFromCart(guitar.id)}
+                                                                    onClick={() => decrementFromCart(guitar)}
                                                                 >
                                                                     -
                                                                 </button>
@@ -54,7 +54,7 @@ export default function Header({ cart, removeFromCart, incrementFromCart, decrem
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-dark"
-                                                                    onClick={() => incrementFromCart(guitar.id)}
+                                                                    onClick={() => incrementFromCart(guitar)}
                                                                 >
                                                                     +
                                                                 </button>
@@ -63,7 +63,7 @@ export default function Header({ cart, removeFromCart, incrementFromCart, decrem
                                                                 <button
                                                                     className="btn btn-danger"
                                                                     type="button"
-                                                                    onClick={() => removeFromCart(guitar.id)}
+                                                                    onClick={() => removeFromCart(guitar)}
                                                                 >
                                                                     X
                                                                 </button>

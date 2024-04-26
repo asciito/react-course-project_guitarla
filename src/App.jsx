@@ -1,70 +1,32 @@
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
 import { db } from './data/db.js';
-import { useEffect, useState } from "react";
-
-const initialState = () => {
-    const data = localStorage.getItem('cart');
-
-    return data ? JSON.parse(data) : [];
-}
+import { useState } from "react";
+import { useCart } from "./hooks/cart.js";
 
 export default function App() {
-    const [data,] = useState(db);
-    const [cart, setCart] = useState(initialState());
-
-    const CART_ITEM_LIMIT_BY_ELEMENT = 10;
-
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
-
-
-    const handleCart = guitar => {
-        const guitarIndex = cart.findIndex(item => item.id === guitar.id);
-
-        if (guitarIndex === -1) {
-            setCart([...cart, { ...guitar, qty: 1 }]);
-        } else {
-            handleIncrementCartElementQty(cart[guitarIndex].id)
-        }
-    };
-
-    const handleRemoveFromCart = (id) => {
-        setCart(cart.filter(item => item.id !== id));
-    };
-
-    const handleIncrementCartElementQty = (id) => {
-        setCart(cart.map(item => id === item.id && item.qty < CART_ITEM_LIMIT_BY_ELEMENT ? { ...item, qty: item.qty + 1 } : item));
-    }
-
-    const handleDecrementCartElementQty = (id) => {
-        setCart(
-            cart
-                .map(item => id === item.id ? (item.qty - 1 > 0 ? { ...item, qty: item.qty - 1 } : null) : item)
-                .filter(item => item !== null)
-        );
-    }
-
-    const handleCleanCart = () => setCart([]);
+    const [ data, ] = useState(db);
+    const { cart, cleanCart, addCartItem, decrementCartItem, removeCartItem } = useCart();
 
     return (
         <>
             <Header
-                cart={cart}
-                removeFromCart={handleRemoveFromCart}
-                incrementFromCart={handleIncrementCartElementQty}
-                decrementFromCart={handleDecrementCartElementQty}
-                cleanCart={handleCleanCart}
+                cart={ cart }
+                cleanCart={ cleanCart }
+                removeFromCart={ removeCartItem }
+                incrementFromCart={ addCartItem }
+                decrementFromCart={ decrementCartItem }
             />
 
             <main className="container-xl mt-5">
                 <h2 className="text-center">Nuestra Colección</h2>
 
                 <div className="row mt-5">
-                    {data
-                        ? data.map(guitar => <Guitar key={guitar.id} data={guitar} addToCart={handleCart} />)
-                        : null}
+                    {
+                        data
+                            ? data.map(guitar => <Guitar key={guitar.id} data={ guitar } addToCart={ addCartItem } />)
+                            : null
+                    }
                 </div>
             </main>
 
