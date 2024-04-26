@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-function initialState(key) {
-    const data = localStorage.getItem(key);
+function initialState() {
+    const data = localStorage.getItem('cart');
 
     if (! data) {
         return [];
@@ -10,12 +10,12 @@ function initialState(key) {
     return JSON.parse(data);
 }
 
-export function useCart(name = 'cart', qty_limit = 10) {
-    const [ cart, setCart ] = useState(initialState(name));
+export function useCart(qty_limit = 10) {
+    const [ cart, setCart ] = useState(initialState());
 
     useEffect(() => {
-        localStorage.setItem(name, JSON.stringify(cart));
-    }, [ cart ]);
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [ cart ]); // eslint-disable-next-line
 
     const handleAddCartItem = item => {
         setCart(cart => {
