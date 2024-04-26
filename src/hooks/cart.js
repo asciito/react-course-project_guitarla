@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 function initialState() {
     const data = localStorage.getItem('cart');
@@ -12,6 +12,8 @@ function initialState() {
 
 export function useCart(qty_limit = 10) {
     const [ cart, setCart ] = useState(initialState());
+    const cartIsEmpty = useMemo(() => cart && cart.length, [cart]);
+    const cartTotal = useMemo(() => cart ? cart.reduce((total, guitar) => total + (guitar.qty * guitar.price), 0) : 0, [cart]);
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
@@ -59,6 +61,8 @@ export function useCart(qty_limit = 10) {
 
     return {
         cart,
+        cartTotal,
+        cartIsEmpty,
         addCartItem: handleAddCartItem,
         decrementCartItem: handleDecrementCartItem,
         removeCartItem: handleRemoveCartItem,

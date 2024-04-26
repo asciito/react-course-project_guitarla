@@ -6,12 +6,14 @@ import { useCart } from "./hooks/cart.js";
 
 export default function App() {
     const [ data, ] = useState(db);
-    const { cart, cleanCart, addCartItem, decrementCartItem, removeCartItem } = useCart();
+    const { cart, cartTotal, cartIsEmpty, cleanCart, addCartItem, decrementCartItem, removeCartItem } = useCart();
 
     return (
         <>
             <Header
                 cart={ cart }
+                cartTotal={ cartTotal }
+                cartIsEmpty={ cartIsEmpty }
                 cleanCart={ cleanCart }
                 removeFromCart={ removeCartItem }
                 incrementFromCart={ addCartItem }

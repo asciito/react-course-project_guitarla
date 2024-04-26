@@ -1,8 +1,4 @@
-import { useMemo } from "react";
-
-export default function Header({ cart, removeFromCart, incrementFromCart, decrementFromCart, cleanCart }) {
-    const cartIsEmpty = useMemo(() => cart && cart.length, [cart]);
-    const cartTotal = useMemo(() => cart ? cart.reduce((total, guitar) => total + (guitar.qty * guitar.price), 0) : 0, [cart]);
+export default function Header({ cart, cartTotal, cartIsEmpty, removeFromCart, incrementFromCart, decrementFromCart, cleanCart }) {
 
     return (
         <>
